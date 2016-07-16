@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
@@ -65,4 +66,12 @@ public class EntryDAO {
     //Update order number : this function will change the order of the entry item. TODO
 
     //List all entries : this will spit out all the entries in a format that is acceptable to the adapter
+    public Cursor getAllItems(){
+        //Cursor cur;
+        final String query="SELECT items.id as '_id', entries.item_id, date, item, rank"+
+                " from "+DBHelper.TABLE_ENTRIES+
+                " inner join "+DBHelper.TABLE_ITEMS+
+                " on entries.item_id=items.item_id";
+        return db.rawQuery(query,null);
+    }
 }
