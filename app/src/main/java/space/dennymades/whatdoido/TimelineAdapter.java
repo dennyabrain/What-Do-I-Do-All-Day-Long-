@@ -24,12 +24,27 @@ public class TimelineAdapter extends CursorAdapter {
     @Override
     public void bindView(View view, Context context, Cursor cursor){
         TextView title1 = (TextView) view.findViewById(R.id.text1);
-        TextView title2 = (TextView) view.findViewById(R.id.text2);
-        TextView title3 = (TextView) view.findViewById(R.id.text3);
-        TextView title4 = (TextView) view.findViewById(R.id.text4);
-
-        String title = cursor.getString(cursor.getColumnIndexOrThrow("item"));
+        String []titleString={"","",""};
+        titleString[0] = cursor.getString(cursor.getColumnIndexOrThrow("first"));
+        titleString[1] = cursor.getString(cursor.getColumnIndexOrThrow("second"));
+        titleString[2] = cursor.getString(cursor.getColumnIndexOrThrow("third"));
+        //check how many items exist
+        int numberOfItems=2;
+        for(int i=0;i<3;i++){
+            if(titleString[i]==null){
+                numberOfItems=i;
+                break;
+            }
+        }
+        String finalString="";
+        for(int i=0;i<numberOfItems+1;i++){
+            if(i<numberOfItems){
+                finalString+=titleString[i]+", ";
+            }else{
+                finalString+=titleString[i];
+            }
+        }
         //String title="dummy";
-        title1.setText(title);
+        title1.setText(finalString);
     }
 }

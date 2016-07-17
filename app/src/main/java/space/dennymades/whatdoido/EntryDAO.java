@@ -68,10 +68,17 @@ public class EntryDAO {
     //List all entries : this will spit out all the entries in a format that is acceptable to the adapter
     public Cursor getAllItems(){
         //Cursor cur;
-        final String query="SELECT items.id as '_id', entries.item_id, date, item, rank"+
+        /*final String query="SELECT items.id as '_id', entries.item_id, date, item, rank"+
                 " from "+DBHelper.TABLE_ENTRIES+
                 " inner join "+DBHelper.TABLE_ITEMS+
-                " on entries.item_id=items.item_id";
+                " on entries.item_id=items.item_id";*/
+        final String query="select\n" +
+                "item_id as _id,\n" +
+                "max(case when rank=1 then item end) as first,\n" +
+                "max(case when rank=2 then item end) as second,\n" +
+                "max(case when rank=3 then item end) as third\n" +
+                "from items\n" +
+                "group by item_id;";
         return db.rawQuery(query,null);
     }
 }
